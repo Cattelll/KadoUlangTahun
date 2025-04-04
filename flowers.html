@@ -88,6 +88,22 @@
         .music-control:hover {
             background: rgba(255, 255, 255, 0.4);
         }
+
+        /* Media query untuk perangkat mobile */
+        @media (max-width: 768px) {
+            .subtitle {
+                display: none; /* Menyembunyikan subtitle pada perangkat mobile */
+            }
+            
+            .btn-back {
+                padding: 10px 20px; /* Ukuran tombol lebih kecil */
+                font-size: 1rem;
+            }
+            
+            .title {
+                font-size: 2rem; /* Ukuran judul lebih kecil */
+            }
+        }
     </style>
 </head>
 <body class="not-loaded">
@@ -402,7 +418,7 @@
     <!-- Title -->
     <h1 class="title"><span id="title"></span></h1>
     
-    <!-- Subtitle -->
+    <!-- Subtitle - akan disembunyikan di mode mobile melalui CSS -->
     <h2 class="subtitle">Semoga semua harapanmu menjadi kenyataan</h2>
     
     <!-- Button Container -->
