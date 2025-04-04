@@ -92,7 +92,9 @@
         /* Media query untuk perangkat mobile */
         @media (max-width: 768px) {
             .subtitle {
-                display: none; /* Menyembunyikan subtitle pada perangkat mobile */
+                font-size: 18px; /* Ukuran font lebih kecil di mobile */
+                top: 100px; /* Posisi lebih dekat dengan judul utama */
+                animation: fadeIn 2s 3s forwards; /* Animasi sedikit lebih cepat */
             }
             
             .btn-back {
@@ -102,6 +104,7 @@
             
             .title {
                 font-size: 2rem; /* Ukuran judul lebih kecil */
+                margin-bottom: 20px; /* Memberikan ruang untuk subtitle */
             }
         }
     </style>
