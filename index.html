@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Happy Birthday</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Dancing+Script:wght@700&display=swap"
@@ -22,6 +22,7 @@
             min-height: 100vh;
             overflow-x: hidden;
             background-image: linear-gradient(to bottom, #000000, #1a0033);
+            -webkit-tap-highlight-color: transparent;
         }
 
         header {
@@ -61,6 +62,7 @@
             transition: all 0.4s ease;
             height: 250px;
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .photo-card:hover {
@@ -94,6 +96,10 @@
             transform: translateY(0);
         }
 
+        .photo-card.touched .photo-info {
+            transform: translateY(0);
+        }
+
         .photo-title {
             font-size: 1.2rem;
             margin-bottom: 5px;
@@ -122,6 +128,8 @@
             font-family: 'Poppins', sans-serif;
             transition: all 0.3s ease;
             font-size: 16px;
+            -webkit-appearance: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .nav-btn:hover {
@@ -146,6 +154,7 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .music-control:hover {
@@ -172,6 +181,7 @@
             justify-content: center;
             transition: all 0.3s ease;
             animation: pulse 1.5s infinite;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .modal-button:hover {
@@ -188,6 +198,7 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.8);
             overflow: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .modal-content {
@@ -217,6 +228,7 @@
             font-size: 28px;
             font-weight: bold;
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .greeting-title {
@@ -305,7 +317,7 @@
 
 <body>
     <!-- Audio Element -->
-    <audio id="bgMusic" loop>
+    <audio id="bgMusic" loop preload="auto">
         <source src="asset/audio/lagu.mp3" type="audio/mp3">
     </audio>
 
@@ -324,7 +336,7 @@
                     sesuatu yang gak bisa di ganti aja soalnya. Aku tau kita harus tetap bergerak, bertemu dengan orang
                     baru dan menjalin hubungan. Jadi, Aku cuman mau minta maaf jika selama ini enggak bisa ngasih yang
                     terbaik dan ngebuat Ra bertanya-tanya. Semoga kita bisa berteman lagi, jangan sungkan untuk cerita
-                    ke aku</p>
+                    ke aku. Maaf yak, bukan support sistem yang baik.🐢</p>
                 <p>Terima kasih telah pernah menjadi bagian penting dalam perjalanan hidupku. Aku bersyukur pernah
                     bertemu dengan Ra.</p>
             </div>
@@ -353,55 +365,55 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Image gallery data - titles and descriptions for photos
             const photos = [{
-                    src: "asset/img/birthday/photo1.jpg",
-                    title: "Keliling BJM",
-                    description: "Bro, sangat menikmati eskrim"
-                },
-                {
-                    src: "asset/img/birthday/photo2.jpg",
-                    title: "Keujanan Bareng",
-                    description: "Lama yaa dah gak ke bebek sinjay di deket KF"
-                },
-                {
-                    src: "asset/img/birthday/photo3.jpg",
-                    title: "Vidcall di waktu genting",
-                    description: "Bro sedang Kesal"
-                },
-                {
-                    src: "asset/img/birthday/photo4.jpg",
-                    title: "nyari angin doang",
-                    description: "mam mekdi sama bro"
-                },
-                {
-                    src: "asset/img/birthday/photo5.jpg",
-                    title: "Bro jatoh pas naik motor",
-                    description: "Sakit ini brok pasti"
-                },
-                {
-                    src: "asset/img/birthday/photo6.jpg",
-                    title: "Makan bareng lagi",
-                    description: "Pertualangan menamatkan seluruh makanan"
-                },
-                {
-                    src: "asset/img/birthday/photo7.jpg",
-                    title: "Grocery date",
-                    description: "Kapan lagi belanja bareng"
-                },
-                {
-                    src: "asset/img/birthday/photo8.jpg",
-                    title: "Dengerin lagu bareng",
-                    description: "lagu ujan emang menarik sihh"
-                },
-                {
-                    src: "asset/img/birthday/photo9.jpg", 
-                    title: "Alamak piknik",
-                    description: "bro lupa foto sendiri, sorry yak"
-                },
-                {
-                    src: "asset/img/birthday/photo10.jpg",
-                    title: "Bro terbang tinggi terlalu jauh",
-                    description: "terus mengudara brok, jangan sampai jatuh"
-                }
+                src: "asset/img/birthday/photo1.jpg",
+                title: "Keliling BJM",
+                description: "Bro, sangat menikmati eskrim"
+            },
+            {
+                src: "asset/img/birthday/photo2.jpg",
+                title: "Keujanan Bareng",
+                description: "Lama yaa dah gak ke bebek sinjay di deket KF"
+            },
+            {
+                src: "asset/img/birthday/photo3.jpg",
+                title: "Vidcall di waktu genting",
+                description: "Bro sedang Kesal"
+            },
+            {
+                src: "asset/img/birthday/photo4.jpg",
+                title: "nyari angin doang",
+                description: "mam mekdi sama bro"
+            },
+            {
+                src: "asset/img/birthday/photo5.jpg",
+                title: "Bro jatoh pas naik motor",
+                description: "Sakit ini brok pasti"
+            },
+            {
+                src: "asset/img/birthday/photo6.jpg",
+                title: "Makan bareng lagi",
+                description: "Pertualangan menamatkan seluruh makanan"
+            },
+            {
+                src: "asset/img/birthday/photo7.jpg",
+                title: "Grocery date",
+                description: "Kapan lagi belanja bareng"
+            },
+            {
+                src: "asset/img/birthday/photo8.jpg",
+                title: "Dengerin lagu bareng",
+                description: "lagu ujan emang menarik sihh"
+            },
+            {
+                src: "asset/img/birthday/photo9.jpg",
+                title: "Alamak piknik",
+                description: "bro lupa foto sendiri, sorry yak"
+            },
+            {
+                src: "asset/img/birthday/photo10.jpg",
+                title: "Bro terbang tinggi terlalu jauh",
+                description: "terus mengudara brok, jangan sampai jatuh"
+            }
             ];
 
             // DOM elements
@@ -415,52 +427,68 @@
 
             // Initialize music state
             let isMusicPlaying = false;
+            let userInteracted = false;
 
-            // Auto play music on user interaction with the page
+            // Function to handle audio play with iOS compatibility
             const playMusic = () => {
-                const playPromise = bgMusic.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        isMusicPlaying = true;
-                        musicControl.textContent = '♪';
-                        // Store music state for next page
+                if (!userInteracted) return;
+
+                bgMusic.play().then(() => {
+                    isMusicPlaying = true;
+                    musicControl.textContent = '♪';
+                    // Store music state for next page
+                    try {
                         sessionStorage.setItem('musicPlaying', 'true');
-                        // Remove event listeners once music has started
-                        document.removeEventListener('click', playMusic);
-                        document.removeEventListener('touchstart', playMusic);
-                    }).catch(() => {
-                        // Autoplay was blocked by browser
-                        isMusicPlaying = false;
-                    });
-                }
+                    } catch (e) {
+                        console.log('SessionStorage error:', e);
+                    }
+                }).catch((error) => {
+                    console.log('Audio play failed:', error);
+                    isMusicPlaying = false;
+                });
             };
 
-            // Try to autoplay music (will work if autoplay is allowed by browser)
-            playMusic();
+            // Handle user interaction for iOS audio
+            const handleUserInteraction = () => {
+                if (userInteracted) return;
+                userInteracted = true;
+                playMusic();
+            };
 
-            // Add event listeners to start music on first user interaction
-            document.addEventListener('click', playMusic);
-            document.addEventListener('touchstart', playMusic);
+            // Add user interaction listeners
+            document.addEventListener('click', handleUserInteraction, { once: false });
+            document.addEventListener('touchstart', handleUserInteraction, { once: false });
 
             // Setup music controls
-            musicControl.addEventListener('click', () => {
+            musicControl.addEventListener('click', (e) => {
+                e.stopPropagation();
+
                 if (isMusicPlaying) {
                     bgMusic.pause();
                     musicControl.textContent = '♫';
                     isMusicPlaying = false;
+                    try {
+                        sessionStorage.setItem('musicPlaying', 'false');
+                    } catch (e) {
+                        console.log('SessionStorage error:', e);
+                    }
                 } else {
-                    bgMusic.play();
-                    musicControl.textContent = '♪';
-                    isMusicPlaying = true;
+                    handleUserInteraction();
+                    if (!isMusicPlaying) {
+                        playMusic();
+                    }
                 }
-
-                // Store music state for next page
-                sessionStorage.setItem('musicPlaying', isMusicPlaying);
             });
 
             // Check if music was playing from another page
-            if (sessionStorage.getItem('musicPlaying') === 'true') {
-                playMusic();
+            try {
+                if (sessionStorage.getItem('musicPlaying') === 'true') {
+                    // We still need user interaction on iOS, so we'll just mark it as should play
+                    userInteracted = true;
+                    // Will attempt to play after user interacts
+                }
+            } catch (e) {
+                console.log('SessionStorage error:', e);
             }
 
             // Modal functions
@@ -478,7 +506,8 @@
                 }, 400);
             });
 
-            window.addEventListener('click', (event) => {
+            // Close modal when clicking outside
+            greetingModal.addEventListener('click', (event) => {
                 if (event.target === greetingModal) {
                     greetingModal.classList.remove('modal-show');
                     setTimeout(() => {
@@ -487,26 +516,55 @@
                 }
             });
 
-            // Create gallery items
+            // Create gallery items with proper error handling for images
             photos.forEach((photo) => {
                 const photoCard = document.createElement('div');
                 photoCard.className = 'photo-card';
 
-                photoCard.innerHTML = `
-                    <img src="${photo.src}" alt="${photo.title}">
-                    <div class="photo-info">
-                        <h3 class="photo-title">${photo.title}</h3>
-                        <p class="photo-description">${photo.description}</p>
-                    </div>
-                `;
+                // Create image with error handling
+                const img = document.createElement('img');
+                img.alt = photo.title;
+                img.onerror = function () {
+                    this.onerror = null;
+                    this.src = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20fill%3D%22%23666%22%20width%3D%22300%22%20height%3D%22200%22%2F%3E%3Ctext%20fill%3D%22%23fff%22%20font-family%3D%22sans-serif%22%20font-size%3D%2220%22%20text-anchor%3D%22middle%22%20x%3D%22150%22%20y%3D%22100%22%3E' + photo.title + '%3C%2Ftext%3E%3C%2Fsvg%3E';
+                    console.log(`Failed to load image: ${photo.src}`);
+                };
+                img.src = photo.src;
+
+                // Create info div
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'photo-info';
+
+                const titleEl = document.createElement('h3');
+                titleEl.className = 'photo-title';
+                titleEl.textContent = photo.title;
+
+                const descEl = document.createElement('p');
+                descEl.className = 'photo-description';
+                descEl.textContent = photo.description;
+
+                infoDiv.appendChild(titleEl);
+                infoDiv.appendChild(descEl);
+
+                photoCard.appendChild(img);
+                photoCard.appendChild(infoDiv);
+
+                // Add touch support for mobile
+                photoCard.addEventListener('touchstart', function () {
+                    this.classList.add('touched');
+                });
 
                 gallery.appendChild(photoCard);
             });
 
-            // Navigation buttons
+            // Navigation button
             nextBtn.addEventListener('click', () => {
-                // Store music state
-                sessionStorage.setItem('musicPlaying', isMusicPlaying);
+                // Store music state in a try-catch to handle private browsing
+                try {
+                    sessionStorage.setItem('musicPlaying', isMusicPlaying ? 'true' : 'false');
+                } catch (e) {
+                    console.log('SessionStorage error:', e);
+                }
                 window.location.href = "./flowers.html";
             });
         });
