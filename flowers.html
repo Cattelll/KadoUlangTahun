@@ -14,6 +14,32 @@
             -webkit-tap-highlight-color: transparent;
         }
         
+        /* Override untuk membuat bunga lebih besar */
+        .flowers {
+            transform: scale(0.6) !important; /* Perbesar dari default 0.4 */
+            top: 25% !important; /* Sesuaikan posisi untuk ukuran baru */
+        }
+        
+        /* Media query khusus untuk perangkat besar */
+        @media (min-width: 1024px) {
+            .flowers {
+                transform: scale(0.7) !important; /* Lebih besar lagi untuk desktop */
+            }
+        }
+        
+        /* Media query untuk iPhone - tetap besar meskipun di layar kecil */
+        @media (max-width: 768px) {
+            .flowers {
+                transform: scale(0.5) !important; /* Tetap besar di mobile */
+                top: 28% !important; /* Sesuaikan posisi untuk mobile */
+            }
+            
+            /* Juga pastikan rotasi dan animasi tetap mulus */
+            .flower__leafs--1, .flower__leafs--2, .flower__leafs--3 {
+                animation-duration: 22s; /* Sedikit lebih lambat untuk iPhone */
+            }
+        }
+        
         .btn-container {
             position: absolute;
             bottom: 5vh;
@@ -98,7 +124,7 @@
             background: rgba(255, 255, 255, 0.4);
         }
 
-        /* Media query untuk perangkat mobile */
+        /* Media query untuk perangkat mobile - kecuali ukuran bunga */
         @media (max-width: 768px) {
             .subtitle {
                 font-size: 18px; /* Ukuran font lebih kecil di mobile */
@@ -114,11 +140,6 @@
             .title {
                 font-size: 2rem; /* Ukuran judul lebih kecil */
                 margin-bottom: 20px; /* Memberikan ruang untuk subtitle */
-            }
-            
-            /* Memperkecil skala bunga pada perangkat mobile */
-            .flowers {
-                transform: scale(0.3);
             }
         }
     </style>
