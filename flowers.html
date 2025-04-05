@@ -27,16 +27,40 @@
             }
         }
         
-        /* Media query untuk iPhone - tetap besar meskipun di layar kecil */
+        /* Media query untuk iPhone - bunga LEBIH BESAR di mobile */
         @media (max-width: 768px) {
             .flowers {
-                transform: scale(0.5) !important; /* Tetap besar di mobile */
-                top: 28% !important; /* Sesuaikan posisi untuk mobile */
+                transform: scale(0.6) !important; /* Lebih besar di mobile */
+                top: 20% !important; /* Posisi lebih ke atas agar terlihat lebih banyak */
             }
             
-            /* Juga pastikan rotasi dan animasi tetap mulus */
-            .flower__leafs--1, .flower__leafs--2, .flower__leafs--3 {
-                animation-duration: 22s; /* Sedikit lebih lambat untuk iPhone */
+            /* Sedikit trik untuk memperlebar viewport pada mobile */
+            body {
+                min-height: 105vh; /* Sedikit lebih tinggi untuk menampung bunga */
+                overflow: hidden;
+            }
+            
+            /* Menyesuaikan posisi tombol kembali untuk bunga besar */
+            .btn-container {
+                bottom: 3vh !important;
+                position: fixed !important; /* Pastikan tetap terlihat */
+            }
+            
+            /* Memastikan title tidak terhalang bunga */
+            .title {
+                top: 35px !important;
+                font-size: 2rem !important;
+            }
+            
+            .subtitle {
+                top: 85px !important;
+            }
+        }
+        
+        /* Media query khusus perangkat yang sangat kecil */
+        @media (max-width: 380px) {
+            .flowers {
+                transform: scale(0.55) !important; /* Masih besar tapi sedikit menyesuaikan */
             }
         }
         
@@ -125,21 +149,10 @@
         }
 
         /* Media query untuk perangkat mobile - kecuali ukuran bunga */
-        @media (max-width: 768px) {
-            .subtitle {
-                font-size: 18px; /* Ukuran font lebih kecil di mobile */
-                top: 100px; /* Posisi lebih dekat dengan judul utama */
-                animation: fadeIn 2s 3s forwards; /* Animasi sedikit lebih cepat */
-            }
-            
+        @media (max-width: 768px) {            
             .btn-back {
                 padding: 10px 20px; /* Ukuran tombol lebih kecil */
                 font-size: 1rem;
-            }
-            
-            .title {
-                font-size: 2rem; /* Ukuran judul lebih kecil */
-                margin-bottom: 20px; /* Memberikan ruang untuk subtitle */
             }
         }
     </style>
