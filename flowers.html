@@ -3,67 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FLOWERS</title>
-    <!-- Gunakan external CSS file seperti aslinya -->
     <link rel="stylesheet" href="asset/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Tambahkan CSS khusus untuk iOS compatibility */
-        body {
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        /* Override untuk membuat bunga lebih besar */
-        .flowers {
-            transform: scale(0.6) !important; /* Perbesar dari default 0.4 */
-            top: 25% !important; /* Sesuaikan posisi untuk ukuran baru */
-        }
-        
-        /* Media query khusus untuk perangkat besar */
-        @media (min-width: 1024px) {
-            .flowers {
-                transform: scale(0.7) !important; /* Lebih besar lagi untuk desktop */
-            }
-        }
-        
-        /* Media query untuk iPhone - bunga LEBIH BESAR di mobile */
-        @media (max-width: 768px) {
-            .flowers {
-                transform: scale(0.6) !important; /* Lebih besar di mobile */
-                top: 20% !important; /* Posisi lebih ke atas agar terlihat lebih banyak */
-            }
-            
-            /* Sedikit trik untuk memperlebar viewport pada mobile */
-            body {
-                min-height: 105vh; /* Sedikit lebih tinggi untuk menampung bunga */
-                overflow: hidden;
-            }
-            
-            /* Menyesuaikan posisi tombol kembali untuk bunga besar */
-            .btn-container {
-                bottom: 3vh !important;
-                position: fixed !important; /* Pastikan tetap terlihat */
-            }
-            
-            /* Memastikan title tidak terhalang bunga */
-            .title {
-                top: 35px !important;
-                font-size: 2rem !important;
-            }
-            
-            .subtitle {
-                top: 85px !important;
-            }
-        }
-        
-        /* Media query khusus perangkat yang sangat kecil */
-        @media (max-width: 380px) {
-            .flowers {
-                transform: scale(0.55) !important; /* Masih besar tapi sedikit menyesuaikan */
-            }
-        }
-        
         .btn-container {
             position: absolute;
             bottom: 5vh;
@@ -86,8 +30,6 @@
             transition: all 0.3s ease;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
             outline: none;
-            -webkit-appearance: none; /* Fix untuk styling button iOS */
-            -webkit-tap-highlight-color: transparent;
         }
         
         .btn-back:hover {
@@ -141,18 +83,28 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            -webkit-tap-highlight-color: transparent;
         }
         
         .music-control:hover {
             background: rgba(255, 255, 255, 0.4);
         }
 
-        /* Media query untuk perangkat mobile - kecuali ukuran bunga */
-        @media (max-width: 768px) {            
+        /* Media query untuk perangkat mobile */
+        @media (max-width: 768px) {
+            .subtitle {
+                font-size: 18px; /* Ukuran font lebih kecil di mobile */
+                top: 100px; /* Posisi lebih dekat dengan judul utama */
+                animation: fadeIn 2s 3s forwards; /* Animasi sedikit lebih cepat */
+            }
+            
             .btn-back {
                 padding: 10px 20px; /* Ukuran tombol lebih kecil */
                 font-size: 1rem;
+            }
+            
+            .title {
+                font-size: 2rem; /* Ukuran judul lebih kecil */
+                margin-bottom: 20px; /* Memberikan ruang untuk subtitle */
             }
         }
     </style>
@@ -161,8 +113,8 @@
     <!-- Background -->
     <div class="night"></div>
   
-    <!-- Audio Element - Gunakan preload untuk memastikan audio siap -->
-    <audio id="bgMusic" loop preload="auto">
+    <!-- Audio Element - Using a different song for flowers page -->
+    <audio id="bgMusic" loop>
         <source src="asset/audio/flowers-song.mp3" type="audio/mp3">
     </audio>
   
@@ -479,28 +431,12 @@
 
     <!-- Script untuk animasi dan musik -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Safely try to access sessionStorage
-            let savedMusicState = false;
-            try {
-                savedMusicState = sessionStorage.getItem('musicPlaying') === 'true';
-            } catch (e) {
-                console.log('SessionStorage error:', e);
-            }
-
-            // Set up variables
-            const bgMusic = document.getElementById('bgMusic');
-            const musicControl = document.getElementById('musicControl');
-            const backBtn = document.getElementById('backBtn');
-            let isMusicPlaying = false;
-            let userInteracted = false;
-
-            // Function to handle flower animation start
-            const startAnimation = () => {
+        onload = () => {
+            const c = setTimeout(() => {
                 document.body.classList.remove("not-loaded");
 
                 // Original title animation
-                const titles = ('Happy Birthday Ra').split('');
+                const titles = ('Happy Birthday Ra').split('')
                 const titleElement = document.getElementById('title');
                 let index = 0;
 
@@ -513,76 +449,65 @@
                 }
 
                 appendTitle();
-            };
-
-            // Start animation after a short delay
-            setTimeout(startAnimation, 1000);
-
-            // Function to play music with iOS compatibility
-            const playMusic = () => {
-                if (!userInteracted) return;
                 
-                bgMusic.play().then(() => {
-                    isMusicPlaying = true;
-                    musicControl.textContent = '♪';
-                    // Store music state for next page
-                    try {
-                        sessionStorage.setItem('musicPlaying', 'true');
-                    } catch (e) {
-                        console.log('SessionStorage error:', e);
+                // Set up audio control
+                const bgMusic = document.getElementById('bgMusic');
+                const musicControl = document.getElementById('musicControl');
+                
+                // Initialize music playing state for this page
+                let isMusicPlaying = false;
+                
+                // Function to play music
+                const playMusic = () => {
+                    const playPromise = bgMusic.play();
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            isMusicPlaying = true;
+                            musicControl.textContent = '♪';
+                        }).catch(() => {
+                            // Autoplay was blocked by browser
+                            isMusicPlaying = false;
+                        });
                     }
-                }).catch((error) => {
-                    console.log('Audio play failed:', error);
-                    isMusicPlaying = false;
+                };
+                
+                // Try to autoplay music when page loads
+                playMusic();
+                
+                // Add event listeners to start music on first user interaction
+                document.addEventListener('click', function playOnInteraction() {
+                    if (!isMusicPlaying) {
+                        playMusic();
+                    }
+                    // Remove the listener after first interaction
+                    document.removeEventListener('click', playOnInteraction);
                 });
-            };
-
-            // Handle user interaction for iOS audio
-            const handleUserInteraction = () => {
-                if (userInteracted) return;
-                userInteracted = true;
                 
-                // If music was playing before, try to resume
-                if (savedMusicState) {
-                    playMusic();
-                }
-            };
-
-            // Add user interaction listeners
-            document.addEventListener('click', handleUserInteraction);
-            document.addEventListener('touchstart', handleUserInteraction);
-
-            // Setup music controls
-            musicControl.addEventListener('click', (e) => {
-                e.stopPropagation();
-                
-                if (isMusicPlaying) {
-                    bgMusic.pause();
-                    musicControl.textContent = '♫';
-                    isMusicPlaying = false;
-                    try {
-                        sessionStorage.setItem('musicPlaying', 'false');
-                    } catch (e) {
-                        console.log('SessionStorage error:', e);
+                // Setup music controls
+                musicControl.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent triggering document click
+                    
+                    if (isMusicPlaying) {
+                        bgMusic.pause();
+                        musicControl.textContent = '♫';
+                        isMusicPlaying = false;
+                    } else {
+                        bgMusic.play();
+                        musicControl.textContent = '♪';
+                        isMusicPlaying = true;
                     }
-                } else {
-                    handleUserInteraction();
-                    playMusic();
-                }
-            });
-            
-            // Set up navigation button
-            backBtn.addEventListener('click', () => {
-                // Store music state before navigating
-                try {
-                    sessionStorage.setItem('musicPlaying', isMusicPlaying ? 'true' : 'false');
-                } catch (e) {
-                    console.log('SessionStorage error:', e);
-                }
-                // Navigate to the index page
-                window.location.href = "./index.html";
-            });
-        });
+                });
+                
+                // Set up navigation button
+                const backBtn = document.getElementById('backBtn');
+                backBtn.addEventListener('click', () => {
+                    // Navigate back to the photo gallery page
+                    window.location.href = "./index.html";
+                });
+                
+                clearTimeout(c);
+            }, 1000);
+        };
     </script>
 </body>
 </html>
