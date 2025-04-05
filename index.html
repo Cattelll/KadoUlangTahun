@@ -81,6 +81,7 @@
             transform: scale(1.1);
         }
 
+        /* Membuat foto-info muncul otomatis di mobile */
         .photo-info {
             position: absolute;
             bottom: 0;
@@ -88,16 +89,33 @@
             right: 0;
             background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
             padding: 20px;
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
+            transform: translateY(0);
+            /* Selalu tampil di mobile */
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 1;
+            /* Selalu terlihat */
         }
 
-        .photo-card:hover .photo-info {
-            transform: translateY(0);
+        /* Pada desktop, gunakan hover effect */
+        @media (min-width: 769px) {
+            .photo-info {
+                transform: translateY(70%);
+                /* Hanya sebagian tampil */
+                opacity: 0.9;
+            }
+
+            .photo-card:hover .photo-info {
+                transform: translateY(0);
+                /* Tampil penuh saat hover */
+                opacity: 1;
+            }
         }
 
-        .photo-card.touched .photo-info {
+        /* Efek tambahan untuk mobile - active state */
+        .photo-card.active .photo-info {
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
             transform: translateY(0);
+            opacity: 1;
         }
 
         .photo-title {
@@ -108,6 +126,21 @@
         .photo-description {
             font-size: 0.9rem;
             opacity: 0.8;
+            max-height: 0;
+            /* Default, deskripsi disembunyikan */
+            overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+            opacity: 0;
+            margin-top: 0;
+        }
+
+        /* Tampilkan deskripsi saat active/hover */
+        .photo-card.active .photo-description,
+        .photo-card:hover .photo-description {
+            max-height: 100px;
+            /* Cukup untuk menampilkan teks */
+            opacity: 1;
+            margin-top: 8px;
         }
 
         /* Navigation Buttons */
@@ -293,6 +326,16 @@
             .greeting-title {
                 font-size: 2rem;
             }
+
+            /* Photo card mobile styling */
+            .photo-card {
+                height: 220px;
+            }
+
+            /* Judul foto lebih besar di mobile */
+            .photo-title {
+                font-size: 1.3rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -336,7 +379,7 @@
                     sesuatu yang gak bisa di ganti aja soalnya. Aku tau kita harus tetap bergerak, bertemu dengan orang
                     baru dan menjalin hubungan. Jadi, Aku cuman mau minta maaf jika selama ini enggak bisa ngasih yang
                     terbaik dan ngebuat Ra bertanya-tanya. Semoga kita bisa berteman lagi, jangan sungkan untuk cerita
-                    ke aku. Maaf yak, bukan support sistem yang baik.🐢</p>
+                    ke aku</p>
                 <p>Terima kasih telah pernah menjadi bagian penting dalam perjalanan hidupku. Aku bersyukur pernah
                     bertemu dengan Ra.</p>
             </div>
@@ -428,6 +471,7 @@
             // Initialize music state
             let isMusicPlaying = false;
             let userInteracted = false;
+            let activeCard = null;
 
             // Function to handle audio play with iOS compatibility
             const playMusic = () => {
@@ -549,12 +593,39 @@
                 photoCard.appendChild(img);
                 photoCard.appendChild(infoDiv);
 
-                // Add touch support for mobile
-                photoCard.addEventListener('touchstart', function () {
-                    this.classList.add('touched');
-                });
+                // Add touch and click support for toggling active state
+                const toggleActive = (e) => {
+                    e.preventDefault();
 
+                    // Deactivate previous active card if not this one
+                    if (activeCard && activeCard !== photoCard) {
+                        activeCard.classList.remove('active');
+                    }
+
+                    // Toggle active state
+                    photoCard.classList.toggle('active');
+
+                    // Update active card reference
+                    if (photoCard.classList.contains('active')) {
+                        activeCard = photoCard;
+                    } else {
+                        activeCard = null;
+                    }
+                };
+
+                // Add event listeners for both touch and mouse
+                photoCard.addEventListener('click', toggleActive);
+
+                // Add to gallery
                 gallery.appendChild(photoCard);
+            });
+
+            // Deactivate card when clicking elsewhere
+            document.addEventListener('click', (e) => {
+                if (activeCard && !e.target.closest('.photo-card')) {
+                    activeCard.classList.remove('active');
+                    activeCard = null;
+                }
             });
 
             // Navigation button
